@@ -14,16 +14,21 @@ import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
 
 public class Calculatrice {
 
 	private JFrame frame;
 
-	private boolean clickOperateur = false;
+	private boolean clickON = false;
+	private boolean clickCE = false;
 	private boolean clickDot = false;
-	private double chiffre1;
-	private double resultat;
+	private boolean newNb = true;
+	private char operator;
+	private double memory;
+	private double equalResult = 0;
+	private double percentResult;
 	private JLabel label_screen;
 
 	/**
@@ -76,7 +81,13 @@ public class Calculatrice {
 		Btn0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn0.getText();
 					label_screen.setText(value);
 				}
@@ -91,7 +102,13 @@ public class Calculatrice {
 		Btn1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn1.getText();
 					label_screen.setText(value);
 				}
@@ -106,7 +123,13 @@ public class Calculatrice {
 		Btn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn2.getText();
 					label_screen.setText(value);
 				}
@@ -117,17 +140,17 @@ public class Calculatrice {
 		Btn2.setBounds(110, 319, 69, 44);
 		frame.getContentPane().add(Btn2);
 
-		JButton Btn_sign = new JButton("+ / -");
-		Btn_sign.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Btn_sign.setBackground(Color.LIGHT_GRAY);
-		Btn_sign.setBounds(189, 374, 69, 44);
-		frame.getContentPane().add(Btn_sign);
-
 		JButton Btn3 = new JButton("3");
 		Btn3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn3.getText();
 					label_screen.setText(value);
 				}
@@ -142,7 +165,13 @@ public class Calculatrice {
 		Btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn4.getText();
 					label_screen.setText(value);
 				}
@@ -157,7 +186,13 @@ public class Calculatrice {
 		Btn5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn5.getText();
 					label_screen.setText(value);
 				}
@@ -172,7 +207,13 @@ public class Calculatrice {
 		Btn6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn6.getText();
 					label_screen.setText(value);
 				}
@@ -187,7 +228,13 @@ public class Calculatrice {
 		Btn7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn7.getText();
 					label_screen.setText(value);
 				}
@@ -202,7 +249,13 @@ public class Calculatrice {
 		Btn8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn8.getText();
 					label_screen.setText(value);
 				}
@@ -217,7 +270,13 @@ public class Calculatrice {
 		Btn9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == true) {
+				if (newNb == true) {
+
+					label_screen.setText("");
+					newNb = false;
+				}
+
+				if (clickON == true) {
 					String value = label_screen.getText() + Btn9.getText();
 					label_screen.setText(value);
 				}
@@ -231,18 +290,33 @@ public class Calculatrice {
 		// ----------------- Mémoires ---------------- \\
 
 		JButton Btn_MRC = new JButton("MRC");
+		Btn_MRC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mrc();
+			}
+		});
 		Btn_MRC.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Btn_MRC.setBackground(Color.LIGHT_GRAY);
 		Btn_MRC.setBounds(31, 154, 69, 44);
 		frame.getContentPane().add(Btn_MRC);
 
 		JButton Btn_Mplus = new JButton("M+");
+		Btn_Mplus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mPlus();
+			}
+		});
 		Btn_Mplus.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Btn_Mplus.setBackground(Color.LIGHT_GRAY);
 		Btn_Mplus.setBounds(110, 154, 69, 44);
 		frame.getContentPane().add(Btn_Mplus);
 
 		JButton Btn_Mminus = new JButton("M-");
+		Btn_Mminus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mMinus();
+			}
+		});
 		Btn_Mminus.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Btn_Mminus.setBackground(Color.LIGHT_GRAY);
 		Btn_Mminus.setBounds(189, 154, 69, 44);
@@ -333,14 +407,10 @@ public class Calculatrice {
 
 				if (clickDot == false) {
 					clickDot = true;
-					String value1 = label_screen.getText() + Btn_dot.getText();
-					label_screen.setText(value1);
+					String value = label_screen.getText() + Btn_dot.getText();
+					label_screen.setText(value);
+					clickDot = false;
 				}
-
-//				Class<Double> value = null;
-//                if (value == double.class);
-//                String value1 = label_screen.getText() + Btn_dot.getText();
-//                label_screen.setText(value1);
 			}
 		});
 		Btn_dot.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -348,18 +418,38 @@ public class Calculatrice {
 		Btn_dot.setBounds(110, 374, 69, 44);
 		frame.getContentPane().add(Btn_dot);
 
+		JButton Btn_sign = new JButton("+ / -");
+		Btn_sign.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (clickON == true) {
+
+					if (!label_screen.getText().equals("0")) {
+
+						equalResult = Double.valueOf(label_screen.getText()) * (-1);
+					}
+				}
+				roundResult();
+			}
+		});
+		Btn_sign.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Btn_sign.setBackground(Color.LIGHT_GRAY);
+		Btn_sign.setBounds(189, 374, 69, 44);
+		frame.getContentPane().add(Btn_sign);
+
 		// ----------------- ON / CE ---------------- \\
 
 		JButton Btn_On = new JButton("ON-C");
 		Btn_On.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (clickOperateur == false) {
-					clickOperateur = true;
+				if (clickON == false) {
+					clickON = true;
 					label_screen.setText("");
 					screen.setBackground(Color.LIGHT_GRAY);
 				} else {
-
+					label_screen.setText("");
+					memory = 0;
 				}
 			}
 		});
@@ -370,6 +460,15 @@ public class Calculatrice {
 		frame.getContentPane().add(Btn_On);
 
 		JButton Btn_CE = new JButton("CE");
+		Btn_CE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (clickCE == false) {
+					clickCE = true;
+					label_screen.setText("");
+				}
+			}
+		});
 		Btn_CE.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Btn_CE.setBackground(Color.LIGHT_GRAY);
 		Btn_CE.setBounds(268, 154, 69, 44);
@@ -382,32 +481,130 @@ public class Calculatrice {
 
 	public void addition() {
 
-//		
-//		chiffre1 = chiffre1 + Double.valueOf(label_screen.getText()).doubleValue();
-//		label_screen.setText(String.valueOf(chiffre1));
+		calculation();
+		this.operator = '+';
 	}
 
 	public void subtraction() {
 
+		calculation();
+		this.operator = '-';
 	}
 
 	public void multiplication() {
 
+		calculation();
+		this.operator = 'x';
 	}
 
 	public void division() {
 
+		calculation();
+		this.operator = '\u00F7';
 	}
 
 	public void percentage() {
 
+		if (clickON == true) {
+
+			percentResult = (memory * Double.parseDouble(label_screen.getText())) / 100;
+			label_screen.setText("" + percentResult);
+
+		} else {
+
+			percentResult = Double.parseDouble(label_screen.getText()) / 100;
+			label_screen.setText("" + percentResult);
+
+		}
 	}
 
 	public void root() {
 
+		if (!label_screen.getText().isEmpty()) {
+
+			equalResult = Math.sqrt(Double.parseDouble(label_screen.getText()));
+		}
+
+		roundResult();
 	}
-	
+
 	public void equal() {
+
+		System.out.println(this.memory);
+		System.out.println(this.operator);
+		System.out.println(label_screen.getText());
+
+		calculation();
+		this.memory = 0;
+	}
+
+	public void calculation() {
+
+		if (this.operator == '+') {
+
+			equalResult = this.memory + Double.parseDouble(label_screen.getText());
+			label_screen.setText("" + equalResult);
+
+		} else if (this.operator == '-') {
+
+			equalResult = this.memory - Double.parseDouble(label_screen.getText());
+			label_screen.setText("" + equalResult);
+
+		} else if (this.operator == 'x') {
+
+			equalResult = this.memory * Double.parseDouble(label_screen.getText());
+			label_screen.setText("" + equalResult);
+
+		} else if (this.operator == '\u00F7') {
+
+			equalResult = this.memory / Double.parseDouble(label_screen.getText());
+			label_screen.setText("" + equalResult);
+
+		} else {
+
+			equalResult = Double.parseDouble(label_screen.getText());
+			label_screen.setText("");
+		}
+
+		this.newNb = true;
+		roundResult();
+		this.memory = equalResult;
+	}
+
+	// ----------------- Fonctions mémoire ---------------- \\
+
+	public void mrc() {
+
 		
 	}
+
+	public void mPlus() {
+		
+		
+	}
+
+	public void mMinus() {
+		
+		
+	}
+
+	// ----------------- Arrondi ---------------- \\
+
+	public void roundResult() {
+
+		DecimalFormat roundResult = new DecimalFormat("#.###");
+		label_screen.setText(roundResult.format(equalResult));
+	}
+
+//	public void roundPlusMinus() {
+//		
+//		DecimalFormat roundPlusMinus = new DecimalFormat("#.###");
+//		label_screen.setText(roundPlusMinus.format(plusMinusResult));
+//	}
+//	
+//	public void roundRoot() {
+//
+//		DecimalFormat roundRoot = new DecimalFormat("#.###");
+//		label_screen.setText(roundRoot.format(rootResult));
+//	}
 }
